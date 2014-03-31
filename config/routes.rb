@@ -1,13 +1,17 @@
 Depot::Application.routes.draw do
+
   get 'admin' => 'admin#index'
   controller :sessions do
     get 'login' => :new
     post 'login' => :create
     delete 'logout' => :destroy
   end
-  
+
+
   get "sessions/create"
   get "sessions/destroy"
+
+
   resources :users
 
   resources :orders
@@ -16,10 +20,22 @@ Depot::Application.routes.draw do
 
   resources :carts
 
+  resources :customers
+
+  resources :csessions, only: [:new, :create, :destroy]
+
+  match '/signup',  to: 'customers#new',        via: 'get'
+  match '/signin',  to: 'csessions#new',         via: 'get'
+  match '/signout', to: 'csessions#destroy',     via: 'delete'
+
   get "store/index"
   resources :products do
     get :who_bought, on: :member
   end
+
+
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

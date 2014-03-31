@@ -22,6 +22,14 @@ class OrdersController < ApplicationController
       return
     end
 
+    if !signed_in?
+      redirect_to signup_url, notice: "Sign Up dude"
+      return
+    end
+
+    #if user is a customer and is logged in, go to review order and checkout
+    #if user is not yet a customer redirect to customer signup page
+
     @order = Order.new
   end
 
